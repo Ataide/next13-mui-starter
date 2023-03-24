@@ -1,18 +1,13 @@
-"use client";
+'use client'
 
 import "../styles/output.css";
 
-import { ThemeProvider, CssBaseline, createTheme } from "@mui/material";
-import SideBar from '../components/layout/sidebar';
-import lightThemeOptions from '../styles/theme/lightThemeOptions';
-import MiniDrawer from '../components/layout/main';
+import { PrivateLayout } from '../components/layout/privateLayout';
 
 // export const metadata = {
 //   title: 'iBase - Soluções',
-//   description: 'Estudo de caso do NExtJs 13',
+//   description: 'Estudo de caso do NextJs 13',
 // }
-
-const lightTheme = createTheme(lightThemeOptions);
 
 export default function RootLayout({
   children,
@@ -21,15 +16,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pt-br">
-
-      <ThemeProvider theme={lightTheme}>
-        <CssBaseline />
         <body>
-          <MiniDrawer>
+            <PrivateLayout>
               {children}
-          </MiniDrawer>
+            </PrivateLayout>
         </body>
-      </ThemeProvider>
+     
     </html>
   )
 }
