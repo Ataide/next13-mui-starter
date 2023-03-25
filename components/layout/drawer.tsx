@@ -1,4 +1,5 @@
 'use client';
+
 import Home from '@mui/icons-material/Home'
 import SettingsIcon from '@mui/icons-material/Settings';
 // import MailIcon from '@mui/icons-material/Mail';
@@ -22,6 +23,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import ThemeSwitcherComponent from './themeSwitch';
+import { useTimeout } from 'usehooks-ts';
 
 const drawerWidth = 240;
 
@@ -53,21 +55,27 @@ export default function ResponsiveDrawer(
         </Toolbar>
       <Divider />
       <List>
-        <ListItem disablePadding sx={{ display: 'block' }}>
+        <ListItem disablePadding 
+          sx={{ 
+            display: 'block',  
+            borderRight: pathname === '/' ? '3px solid' : 'none',
+            borderRightColor: 'primary.main'
+          }}
+        >
           <ListItemButton LinkComponent={Link}
+            onClick={handleDrawerToggle}
             href='/'
             selected={ pathname === '/'}
             sx={{
               minHeight: 48,
               justifyContent: mobileOpen ? 'initial' : 'center',
-              
               px: 2.5,
             }}
           >
             <ListItemIcon
               sx={{
-                minWidth: 0,
-                mr: mobileOpen ? 3 : 3,
+                minWidth: 10,
+                mr: mobileOpen ? 1 : 1,
                 justifyContent: 'center',
               }}
             >
@@ -77,8 +85,15 @@ export default function ResponsiveDrawer(
           </ListItemButton>
         </ListItem>
 
-        <ListItem disablePadding sx={{ display: 'block' }}>
+        <ListItem disablePadding 
+          sx={{ 
+            display: 'block', 
+            borderRight: pathname === '/dashboard' ? '3px solid' : 'none',
+            borderRightColor: 'primary.main' 
+          }}
+          >
           <ListItemButton LinkComponent={Link}
+            onClick={handleDrawerToggle}
             href='/dashboard'
             selected={ pathname === '/dashboard'}
             sx={{
@@ -91,7 +106,7 @@ export default function ResponsiveDrawer(
             <ListItemIcon
               sx={{
                 minWidth: 0,
-                mr: mobileOpen ? 3 : 3,
+                mr: mobileOpen ? 1 : 1,
                 justifyContent: 'center',
               }}
             >
@@ -101,8 +116,15 @@ export default function ResponsiveDrawer(
           </ListItemButton>
         </ListItem>
 
-        <ListItem disablePadding sx={{ display: 'block' }}>
+        <ListItem disablePadding 
+          sx={{ 
+            display: 'block', 
+            borderRight: pathname === '/administracao' ? '3px solid' : 'none', 
+            borderRightColor: 'primary.main' 
+          }}>
+            
           <ListItemButton LinkComponent={Link}
+            onClick={handleDrawerToggle}
             href='/administracao'
             selected={ pathname === '/administracao'}
             sx={{
@@ -115,7 +137,7 @@ export default function ResponsiveDrawer(
             <ListItemIcon
               sx={{
                 minWidth: 0,
-                mr: mobileOpen ? 3 : 3,
+                mr: mobileOpen ? 1 : 1,
                 justifyContent: 'center',
               }}
             >

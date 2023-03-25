@@ -14,13 +14,15 @@ export const darkTheme: ThemeOptions = {
       main: red.A400
     },
     background: {
-      default: "#1f1a24",
-      paper: '#3c3836', // This is the background
+      default: "#121212",
+      paper: "#1e1e1e"
+      // paper: '#3c3836', // This is the background
       // default: "#121212",
       
     }
   },
   typography: {
+
 
   }
 };
