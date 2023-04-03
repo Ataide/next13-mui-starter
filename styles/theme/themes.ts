@@ -1,11 +1,11 @@
-import { red } from "@mui/material/colors";
+import { red, deepOrange, deepPurple, blue } from "@mui/material/colors";
 import { ThemeOptions } from '@mui/material/styles';
 
 export const darkTheme: ThemeOptions = {
   palette: {
     mode: "dark",
     primary: {
-      main: '#aaf836'
+      main: deepPurple[400],
     },
     secondary: {
       main: "#19857b"
@@ -22,6 +22,7 @@ export const darkTheme: ThemeOptions = {
     }
   },
   typography: {
+    // fontSize: 14    
 
 
   }
@@ -31,7 +32,7 @@ export const lightTheme: ThemeOptions = {
   palette: {
     mode: "light",
     primary: {
-      main: "#556cd6"
+      main: blue['A200']
     },
     secondary: {
       main: "#19857b"
