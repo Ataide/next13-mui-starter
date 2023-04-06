@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "concurrently \"next dev --turbo\" \"tailwindcss --input ./styles/input.css --output ./styles/output.css --watch\"",
+    "dev": "concurrently \"next dev\" \"tailwindcss --input ./styles/input.css --output ./styles/output.css --watch\"",
     "build": "tailwindcss ./styles/input.css --output ./styles/output.css && next build",
     "start": "next start",
     "lint": "next lint"

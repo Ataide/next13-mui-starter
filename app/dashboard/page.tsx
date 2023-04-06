@@ -1,5 +1,8 @@
+import ClientComponent from "../../components/clientComponent";
+
 export default function Page() {
   return (
-    <h1>Página de Dashboard</h1>
+    <h1>ASD</h1>
+    // <ClientComponent />
   )
 }

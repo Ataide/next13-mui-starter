@@ -24,10 +24,19 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import ThemeSwitcherComponent from './themeSwitch';
 import { useTimeout } from 'usehooks-ts';
+import Search from '../search/Search';
+import Example from './example';
+import { Grid, Paper, styled } from '@mui/material';
 
-const drawerWidth = 240;
+const drawerWidth = 260;
 
-
+const Item = styled(Paper)(({ theme }) => ({
+  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+  ...theme.typography.body2,
+  padding: theme.spacing(1),
+  textAlign: 'center',
+  color: theme.palette.text.secondary,
+}));
 
 export default function ResponsiveDrawer(
   { children, toggleDarkMode }: 
@@ -47,14 +56,20 @@ export default function ResponsiveDrawer(
   };
 
   const drawer = (
-    <div>
-      <Toolbar className='justify-center'>
-        <Typography variant="h6" noWrap component="div">
-              { logo }
-            </Typography>  
-        </Toolbar>
-      <Divider />
-      <List>
+    <>
+      <Toolbar className='justify-center border-pink-400'>
+        <Typography variant="h5" noWrap component="div" className="font-bold text-amber-500">
+          ADA
+        </Typography>
+        <Typography variant="h5" noWrap component="div" className="font-extrabold text-neutral-500">
+          SISTEMAS
+        </Typography>
+      </Toolbar>
+     
+
+      <List className="text-neutral-400">
+        <Typography variant='subtitle2' className='ml-4 opacity-60'> Geral </Typography>
+      
         <ListItem disablePadding 
           sx={{ 
             display: 'block',  
@@ -75,20 +90,22 @@ export default function ResponsiveDrawer(
             <ListItemIcon
               sx={{
                 minWidth: 10,
-                mr: mobileOpen ? 1 : 1,
+                mr: mobileOpen ? 3 : 3,
                 justifyContent: 'center',
+                color: pathname === '/' ? 'primary.main' : '',
+
               }}
             >
               <Home />
             </ListItemIcon>
-            <ListItemText primary={'Home'} sx={{ opacity: mobileOpen ? 1 : 1 }} />
+            <ListItemText primary={'Home'} sx={{ opacity: mobileOpen ? 1 : 1}} />
           </ListItemButton>
         </ListItem>
 
         <ListItem disablePadding 
           sx={{ 
             display: 'block', 
-            borderRight: pathname === '/dashboard' ? '3px solid' : 'none',
+            borderRight: pathname === '/dashboard' ? '3px solid' : 'none  ',
             borderRightColor: 'primary.main' 
           }}
           >
@@ -106,8 +123,9 @@ export default function ResponsiveDrawer(
             <ListItemIcon
               sx={{
                 minWidth: 0,
-                mr: mobileOpen ? 1 : 1,
+                mr: mobileOpen ? 3 : 3,
                 justifyContent: 'center',
+                color: pathname === '/dashboard' ? 'primary.main' : '',
               }}
             >
               <InboxIcon />
@@ -126,7 +144,7 @@ export default function ResponsiveDrawer(
           <ListItemButton LinkComponent={Link}
             onClick={handleDrawerToggle}
             href='/administracao'
-            selected={ pathname === '/administracao'}
+            selected={  pathname.includes('/administracao') }
             sx={{
               minHeight: 48,
               justifyContent: mobileOpen ? 'initial' : 'center',
@@ -137,8 +155,9 @@ export default function ResponsiveDrawer(
             <ListItemIcon
               sx={{
                 minWidth: 0,
-                mr: mobileOpen ? 1 : 1,
+                mr: mobileOpen ? 3 : 3,
                 justifyContent: 'center',
+                color: pathname.includes('/administracao') ? 'primary.main' : '',
               }}
             >
               <SettingsIcon />
@@ -148,7 +167,8 @@ export default function ResponsiveDrawer(
         </ListItem>
 
       </List>
-    </div>
+    </>
+  
   );
 
   return (
@@ -161,13 +181,22 @@ export default function ResponsiveDrawer(
           ml: { sm: `${drawerWidth}px` },
         }}
       >
-        <Toolbar className='justify-between'>
+        <Toolbar className='justify-between' sx={
+            (theme) => ({
+              backgroundColor: theme.palette.mode.includes('dark') ? theme.palette.background.paper : ''
+            })
+          }>
           <IconButton
             color="inherit"
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: 'none' } }}
+            sx={[
+              { mr: 2, display: { sm: 'none' }},
+              (theme) => ({
+                backgroundColor: '#fff'
+              }),
+              ]}
           >
             <MenuIcon />
           </IconButton>
@@ -195,7 +224,7 @@ export default function ResponsiveDrawer(
             keepMounted: true, // Better open performance on mobile.
           }}
           sx={{
-            display: { xs: 'block', sm: 'none', backgroundImage: 'none' },
+            display: { xs: 'block', sm: 'none', backgroundImage: 'none', border: 'none' },
             '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
           }}
         >
@@ -216,8 +245,10 @@ export default function ResponsiveDrawer(
         component="main"
         sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
       >
+        
         <Toolbar />
         {children}
+       
         
       </Box>
     </Box>

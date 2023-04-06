@@ -1,11 +1,11 @@
-import { red, deepOrange, deepPurple, blue } from "@mui/material/colors";
+import { red, amber, deepOrange, deepPurple, blue } from "@mui/material/colors";
 import { ThemeOptions } from '@mui/material/styles';
 
 export const darkTheme: ThemeOptions = {
   palette: {
     mode: "dark",
     primary: {
-      main: deepPurple[400],
+      main: amber[700],
     },
     secondary: {
       main: "#19857b"
@@ -14,12 +14,12 @@ export const darkTheme: ThemeOptions = {
       main: red.A400
     },
     background: {
-      default: "#121212",
-      paper: "#1e1e1e"
+      default: "#1f283e",
+      paper: "#1e1e1e",
       // paper: '#3c3836', // This is the background
-      // default: "#121212",
-      
-    }
+      // default: "#121212",      
+    },
+
   },
   typography: {
     // fontSize: 14    
