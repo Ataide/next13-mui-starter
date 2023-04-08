@@ -18,25 +18,14 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import MailIcon from '@mui/icons-material/Mail';
 import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import ThemeSwitcherComponent from './themeSwitch';
-import { useTimeout } from 'usehooks-ts';
-import Search from '../search/Search';
-import Example from './example';
-import { Grid, Paper, styled } from '@mui/material';
+import { Breadcrumbs, Grid, Paper, styled } from '@mui/material';
+import { useSession } from 'next-auth/react';
 
 const drawerWidth = 260;
-
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: 'center',
-  color: theme.palette.text.secondary,
-}));
 
 export default function ResponsiveDrawer(
   { children, toggleDarkMode }: 
@@ -50,6 +39,7 @@ export default function ResponsiveDrawer(
 
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { data: session } = useSession()
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -62,7 +52,7 @@ export default function ResponsiveDrawer(
           ADA
         </Typography>
         <Typography variant="h5" noWrap component="div" className="font-extrabold text-neutral-500">
-          SISTEMAS
+          SYS
         </Typography>
       </Toolbar>
      
@@ -98,7 +88,13 @@ export default function ResponsiveDrawer(
             >
               <Home />
             </ListItemIcon>
-            <ListItemText primary={'Home'} sx={{ opacity: mobileOpen ? 1 : 1}} />
+            <ListItemText 
+              sx={{ 
+                opacity: mobileOpen ? 1 : 1,
+                color: pathname === '/' ? 'primary.main' : '',
+              }}
+              primary={'Home'} 
+            />
           </ListItemButton>
         </ListItem>
 
@@ -130,7 +126,13 @@ export default function ResponsiveDrawer(
             >
               <InboxIcon />
             </ListItemIcon>
-            <ListItemText primary={'Dashboard'} sx={{ opacity: mobileOpen ? 1 : 1 }} />
+            <ListItemText 
+              sx={{ 
+                opacity: mobileOpen ? 1 : 1,
+                color: pathname === '/dashboard' ? 'primary.main' : '',
+              }}
+              primary={'Dashboard'} 
+            />
           </ListItemButton>
         </ListItem>
 
@@ -162,7 +164,13 @@ export default function ResponsiveDrawer(
             >
               <SettingsIcon />
             </ListItemIcon>
-            <ListItemText primary={'Administração'} sx={{ opacity: mobileOpen ? 1 : 1 }} />
+            <ListItemText 
+              sx={{ 
+                opacity: mobileOpen ? 1 : 1,
+                color: pathname === '/administracao' ? 'primary.main' : '',
+              }}
+              primary={'Administração'} 
+            />
           </ListItemButton>
         </ListItem>
 
@@ -203,8 +211,11 @@ export default function ResponsiveDrawer(
           <Typography variant="h6" noWrap component="div">
             { appName }
           </Typography>
-
-        <ThemeSwitcherComponent useDark={true} themeChanger={toggleDarkMode} />
+        <div className='flex justify-center items-center'>
+          <ThemeSwitcherComponent useDark={true} themeChanger={toggleDarkMode} />
+          
+          <Typography> {session && session?.user?.name}</Typography>
+        </div>
         </Toolbar>
 
 
@@ -247,6 +258,20 @@ export default function ResponsiveDrawer(
       >
         
         <Toolbar />
+
+        <Breadcrumbs aria-label="breadcrumb">
+          <Link color="inherit" href="/">
+            MUI
+          </Link>
+          <Link
+            color="inherit"
+            href="/material-ui/getting-started/installation/"
+          >
+            Core
+          </Link>
+          <Typography color="text.primary">Breadcrumbs</Typography>
+        </Breadcrumbs>
+        
         {children}
        
         

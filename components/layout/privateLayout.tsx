@@ -2,8 +2,9 @@
 
 import { ThemeProvider, CssBaseline, createTheme, useMediaQuery } from "@mui/material";
 import { useMemo, useState } from "react";
-import MiniDrawer from "./drawer";
+import ResponsiveDrawer from "./drawer"; "./drawer";
 import { darkTheme, lightTheme } from '../../styles/theme/themes';
+import { SessionProvider } from "next-auth/react";
 
 export function PrivateLayout({
     children,
@@ -25,14 +26,15 @@ export function PrivateLayout({
   };
 
   return (
-    <>
-     <ThemeProvider theme={theme}>
+  <>
+    <SessionProvider>
+      <ThemeProvider theme={theme}>
         <CssBaseline />
-          <MiniDrawer toggleDarkMode={toggleDarkMode}>
+          <ResponsiveDrawer toggleDarkMode={toggleDarkMode}>
               {children}
-          </MiniDrawer>
+          </ResponsiveDrawer>
       </ThemeProvider>
-    
-    </>
+    </SessionProvider>
+  </>
   )
 }

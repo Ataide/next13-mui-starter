@@ -1,8 +1,8 @@
-import ClientComponent from "../../components/clientComponent";
+"use client"
+import { Stats } from "../../components/dashboard/stats";
 
 export default function Page() {
   return (
-    <h1>ASD</h1>
-    // <ClientComponent />
+    <Stats size={3} title="Total de Usuarios" value="17" showActions={true}/>
   )
 }

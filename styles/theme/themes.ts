@@ -39,10 +39,10 @@ export const lightTheme: ThemeOptions = {
     },
     error: {
       main: red.A400
+    },
+    background: {
+      default: "#f8f8f8",
     }
-    // background: {
-    //   default: "#fff",
-    // }
   }
 };
 
