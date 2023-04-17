@@ -1,14 +1,68 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+Sim... Mais uma receita de dprojeto usando [Next.js](https://nextjs.org/) com [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Features
 
-## Getting Started
+- Authenticação com firebase.
+- Prisma ORM - PostgreSQL.
+- Tailwind CSS - MUI Material Design.
 
-First, run the development server:
+### Banco de dados.
+
+Primeiramente existe um arquivo .yml para ser usado com o docker compose onde cria e inicializa um banco de dados local POSTGRES. Em `lab/dockers/postgres` está o arquivo de configuração. Dê uma olhada e vera o que precisa saber.
+
+```yml
+version: '3.5'
+
+services:
+  postgres:
+    container_name: postgres_local
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
+      PGDATA: /data/postgres
+    volumes:
+       - postgres-db:/data/postgres
+    ports:
+      - "5434:5432"
+
+
+volumes:
+  postgres-db:
+    driver: local
+
+```
+
+Note que a porta local do postgress padrão é 5432 e estou mapeando para a porta 5434 pois tenho outras instancias de potsgres por aqui. Caso haja a necessidade mude isso de acordo com a necessidade.
+
+
+Imaginando que o docker-compose já esteja corretamente instalado na sua build, para criar e instanciar o container com o postgres basta usar o comando: 
 
 ```bash
-npm run dev
-# or
-yarn dev
+docker-compose -d up
 ```
+
+Depois de iniciado, precisamos criar as estruturas do banco de dados. Para isso, utilize o comando:
+
+```bash
+yarn prisma db push
+```
+Logo em seguida precisamos criar nosso primeiro usuario
+Que será: 
+
+email: 'dev@ibase.com',
+senha: 'senhaDev'
+name: 'Usuario Desenvolvedor'
+
+```bash
+yarn prisma db seed
+```
+ Pronto. Se tudo ocorrer bem estamos pronto pra utilizar o sistema.
+
+ Dentro da pasta principal:
+
+ ```bash
+  yarn prisma dev 
+  ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 

@@ -1,6 +1,15 @@
 "use client"
 import { Grid, Paper, styled } from "@mui/material";
 
+//Exemplo de Styled Components com MUI.
+const Item = styled(Paper)(({ theme }) => ({
+  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+  ...theme.typography.body2,
+  padding: theme.spacing(1),
+  textAlign: 'center',
+  color: theme.palette.text.secondary,
+}));
+
 export default function Page() {
   return (
     <Grid container spacing={3}>
@@ -17,10 +26,3 @@ export default function Page() {
   );
 }
 
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: 'center',
-  color: theme.palette.text.secondary,
-}));

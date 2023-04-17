@@ -2,14 +2,12 @@
 
 import Home from '@mui/icons-material/Home'
 import SettingsIcon from '@mui/icons-material/Settings';
-// import MailIcon from '@mui/icons-material/Mail';
 import { useState } from 'react';
 import Link from 'next/link';
-import { useRouter, usePathname  } from 'next/navigation';
+import { usePathname  } from 'next/navigation';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
-import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
@@ -23,7 +21,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import ThemeSwitcherComponent from './themeSwitch';
 import { Breadcrumbs, Grid, Paper, styled } from '@mui/material';
-import { useSession } from 'next-auth/react';
+import { signIn, signOut, useSession } from 'next-auth/react';
 
 const drawerWidth = 260;
 
@@ -213,8 +211,15 @@ export default function ResponsiveDrawer(
           </Typography>
         <div className='flex justify-center items-center'>
           <ThemeSwitcherComponent useDark={true} themeChanger={toggleDarkMode} />
+
+          {session ? (
+            <>
+              <Typography> {session && session?.user?.name}</Typography>
+              <button onClick={() => signOut()}> Logout</button>
+            </>
+
+            ): <button onClick={() => signIn()}> Login </button>}
           
-          <Typography> {session && session?.user?.name}</Typography>
         </div>
         </Toolbar>
 
