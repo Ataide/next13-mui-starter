@@ -19,10 +19,12 @@ import MenuItem from "@mui/material/MenuItem";
 import Avatar from "@mui/material/Avatar";
 import Tooltip from '@mui/material/Tooltip';
 import Button from '@material-tailwind/react/components/Button';
+import PeopleIcon from '@mui/icons-material/People';
 import ThemeSwitcherComponent from './themeSwitch';
 
 import { signIn, signOut, useSession } from 'next-auth/react';
 import { NavItem } from './SideNav/NavItem';
+import { GroupedNavItem } from './SideNav/GroupedNavItem';
 
 const drawerWidth = 260;
 
@@ -83,13 +85,20 @@ export default function ResponsiveDrawer(
           mobileOpen={mobileOpen}   
         />
         
-        <NavItem 
+        <GroupedNavItem
           text='Administração'
-          target='/app/administracao'
           icon={<SettingsIcon />}
-          handleDrawerToggle={handleDrawerToggle}
           mobileOpen={mobileOpen} 
-        />
+        > 
+          <NavItem
+            isGroupedItem={ true }
+            text='Usuarios'
+            target='/app/administracao/users'
+            icon={<PeopleIcon />}
+            handleDrawerToggle={handleDrawerToggle}
+            mobileOpen={mobileOpen} 
+          />
+        </GroupedNavItem>
 
       </List>
     </>

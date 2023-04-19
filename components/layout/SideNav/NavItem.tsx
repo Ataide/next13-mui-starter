@@ -14,17 +14,17 @@ interface NavItemProps {
   icon: React.ReactNode
   mobileOpen: boolean
   handleDrawerToggle: () => void
+  isGroupedItem?: boolean
 }
 
-export function NavItem( {target, text, icon, mobileOpen, handleDrawerToggle }: NavItemProps ) {
+export function NavItem( {target, text, icon, mobileOpen, handleDrawerToggle , isGroupedItem = false}: NavItemProps ) {
   const pathname = usePathname();
   return (
-    <>
       <ListItem disablePadding 
           sx={{ 
             display: 'block',  
             borderRight: pathname === target ? '3px solid' : 'none',
-            borderRightColor: 'primary.main'
+            borderRightColor: 'primary.main',            
           }}
         >
           <ListItemButton LinkComponent={Link}
@@ -35,6 +35,7 @@ export function NavItem( {target, text, icon, mobileOpen, handleDrawerToggle }: 
               minHeight: 48,
               justifyContent: mobileOpen ? 'initial' : 'center',
               px: 2.5,
+              pl: isGroupedItem ? 4 : 2.5
             }}
           >
             <ListItemIcon
@@ -56,7 +57,6 @@ export function NavItem( {target, text, icon, mobileOpen, handleDrawerToggle }: 
               primary={text} 
             />
           </ListItemButton>
-        </ListItem>
-    </>
+      </ListItem>
   )
 }

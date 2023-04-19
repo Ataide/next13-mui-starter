@@ -1,5 +1,6 @@
 "use client"
 import { CardContent, Typography, Card, CardActions, Button, Grid } from "@mui/material";
+import Link from "next/link";
 
 interface StatsProps {
   size: number;
@@ -34,7 +35,9 @@ export function Stats({size, linkButtonRef, statsContent, title, value, descript
             </CardContent>
             {showActions && (
               <CardActions>
-                <Button size="small">Gerenciar</Button>
+                <Link href={'/app/administracao/users/create'} >
+                  <Button size="small">Gerenciar</Button>
+                </Link>
               </CardActions>
             )}
           </Card>
