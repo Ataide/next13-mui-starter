@@ -1,10 +1,9 @@
 'use client';
 
+import { useState } from 'react';
+
 import Home from '@mui/icons-material/Home'
 import SettingsIcon from '@mui/icons-material/Settings';
-import { useState } from 'react';
-import Link from 'next/link';
-import { usePathname  } from 'next/navigation';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -12,16 +11,18 @@ import Drawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
 import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import Avatar from "@mui/material/Avatar";
+import Tooltip from '@mui/material/Tooltip';
+import Button from '@material-tailwind/react/components/Button';
 import ThemeSwitcherComponent from './themeSwitch';
-import { Breadcrumbs, Grid, Paper, styled } from '@mui/material';
+
 import { signIn, signOut, useSession } from 'next-auth/react';
+import { NavItem } from './SideNav/NavItem';
 
 const drawerWidth = 260;
 
@@ -31,13 +32,20 @@ export default function ResponsiveDrawer(
     children: React.ReactNode,  
     toggleDarkMode: (check: boolean) => void}) 
   {
-  
-  const appName = "Titulo Inicial"
-  const logo = "Logo"
 
-  const pathname = usePathname();
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const { data: session } = useSession()
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    const open = Boolean(anchorEl);
+    const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+      setAnchorEl(event.currentTarget);
+    };
+    
+    const handleClose = () => {
+      setAnchorEl(null);
+    };
+  
+  const appName = "Titulo Inicial" 
+  const [ mobileOpen, setMobileOpen ] = useState(false);
+  const { data: session } = useSession();
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -56,121 +64,32 @@ export default function ResponsiveDrawer(
      
 
       <List className="text-neutral-400">
+        
         <Typography variant='subtitle2' className='ml-4 opacity-60'> Geral </Typography>
       
-        <ListItem disablePadding 
-          sx={{ 
-            display: 'block',  
-            borderRight: pathname === '/' ? '3px solid' : 'none',
-            borderRightColor: 'primary.main'
-          }}
-        >
-          <ListItemButton LinkComponent={Link}
-            onClick={handleDrawerToggle}
-            href='/'
-            selected={ pathname === '/'}
-            sx={{
-              minHeight: 48,
-              justifyContent: mobileOpen ? 'initial' : 'center',
-              px: 2.5,
-            }}
-          >
-            <ListItemIcon
-              sx={{
-                minWidth: 10,
-                mr: mobileOpen ? 3 : 3,
-                justifyContent: 'center',
-                color: pathname === '/' ? 'primary.main' : '',
+        <NavItem 
+          text='Home' 
+          target='/app' 
+          icon={<Home/>} 
+          handleDrawerToggle={handleDrawerToggle} 
+          mobileOpen={mobileOpen}   
+        />
 
-              }}
-            >
-              <Home />
-            </ListItemIcon>
-            <ListItemText 
-              sx={{ 
-                opacity: mobileOpen ? 1 : 1,
-                color: pathname === '/' ? 'primary.main' : '',
-              }}
-              primary={'Home'} 
-            />
-          </ListItemButton>
-        </ListItem>
-
-        <ListItem disablePadding 
-          sx={{ 
-            display: 'block', 
-            borderRight: pathname === '/dashboard' ? '3px solid' : 'none  ',
-            borderRightColor: 'primary.main' 
-          }}
-          >
-          <ListItemButton LinkComponent={Link}
-            onClick={handleDrawerToggle}
-            href='/dashboard'
-            selected={ pathname === '/dashboard'}
-            sx={{
-              minHeight: 48,
-              justifyContent: mobileOpen ? 'initial' : 'center',
-              
-              px: 2.5,
-            }}
-          >
-            <ListItemIcon
-              sx={{
-                minWidth: 0,
-                mr: mobileOpen ? 3 : 3,
-                justifyContent: 'center',
-                color: pathname === '/dashboard' ? 'primary.main' : '',
-              }}
-            >
-              <InboxIcon />
-            </ListItemIcon>
-            <ListItemText 
-              sx={{ 
-                opacity: mobileOpen ? 1 : 1,
-                color: pathname === '/dashboard' ? 'primary.main' : '',
-              }}
-              primary={'Dashboard'} 
-            />
-          </ListItemButton>
-        </ListItem>
-
-        <ListItem disablePadding 
-          sx={{ 
-            display: 'block', 
-            borderRight: pathname === '/administracao' ? '3px solid' : 'none', 
-            borderRightColor: 'primary.main' 
-          }}>
-            
-          <ListItemButton LinkComponent={Link}
-            onClick={handleDrawerToggle}
-            href='/administracao'
-            selected={  pathname.includes('/administracao') }
-            sx={{
-              minHeight: 48,
-              justifyContent: mobileOpen ? 'initial' : 'center',
-              
-              px: 2.5,
-            }}
-          >
-            <ListItemIcon
-              sx={{
-                minWidth: 0,
-                mr: mobileOpen ? 3 : 3,
-                justifyContent: 'center',
-                color: pathname.includes('/administracao') ? 'primary.main' : '',
-              }}
-            >
-              <SettingsIcon />
-            </ListItemIcon>
-            <ListItemText 
-              sx={{ 
-                opacity: mobileOpen ? 1 : 1,
-                color: pathname === '/administracao' ? 'primary.main' : '',
-              }}
-              primary={'Administração'} 
-            />
-          </ListItemButton>
-        </ListItem>
+         <NavItem 
+          text='Dashboard' 
+          target='/app/dashboard' 
+          icon={<InboxIcon />} 
+          handleDrawerToggle={handleDrawerToggle} 
+          mobileOpen={mobileOpen}   
+        />
+        
+        <NavItem 
+          text='Administração'
+          target='/app/administracao'
+          icon={<SettingsIcon />}
+          handleDrawerToggle={handleDrawerToggle}
+          mobileOpen={mobileOpen} 
+        />
 
       </List>
     </>
@@ -209,18 +128,71 @@ export default function ResponsiveDrawer(
           <Typography variant="h6" noWrap component="div">
             { appName }
           </Typography>
-        <div className='flex justify-center items-center'>
-          <ThemeSwitcherComponent useDark={true} themeChanger={toggleDarkMode} />
 
-          {session ? (
-            <>
-              <Typography> {session && session?.user?.name}</Typography>
-              <button onClick={() => signOut()}> Logout</button>
-            </>
+          <div className='flex justify-center items-center'>
 
-            ): <button onClick={() => signIn()}> Login </button>}
-          
-        </div>
+            <Tooltip title="Account settings">
+              <IconButton
+                onClick={handleClick}
+                size="small"
+                sx={{ ml: 2 }}
+                aria-controls={open ? 'account-menu' : undefined}
+                aria-haspopup="true"
+                aria-expanded={open ? 'true' : undefined}
+              >
+                <Avatar sx={{ width: 32, height: 32 }}>{session?.user?.name?.charAt(0)}</Avatar>
+              </IconButton>
+            </Tooltip>
+
+            <Menu
+            id="account-menu"
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            PaperProps={{
+              elevation: 2,
+              sx: {
+                overflow: 'visible',
+                filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+                mt: 1.5,
+                '& .MuiAvatar-root': {
+                  width: 32,
+                  height: 32,
+                  ml: -0.5,
+                  mr: 1,
+                },
+                '&:before': {
+                  content: '""',
+                  display: 'block',
+                  position: 'absolute',
+                  top: 0,
+                  right: 14,
+                  width: 10,
+                  height: 10,
+                  bgcolor: 'background.paper.ligth',
+                  transform: 'translateY(-50%) rotate(45deg)',
+                  zIndex: 0,
+                },
+              },
+            }}
+            transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+            anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+            >
+            <MenuItem>
+              <ThemeSwitcherComponent useDark={true} themeChanger={toggleDarkMode} />
+              <Typography>
+                Dark Mode
+              </Typography>
+            </MenuItem>
+
+            <MenuItem sx={{p: 0}}>
+              <Button fullWidth variant="text" onClick={() => { signOut({ redirect: true})}}> Logout</Button>
+            </MenuItem>
+
+            </Menu>
+
+          </div>
+
         </Toolbar>
 
 
@@ -231,13 +203,12 @@ export default function ResponsiveDrawer(
         sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
         aria-label="mailbox folders"
       >
-        {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Drawer          
           variant="temporary"
           open={mobileOpen}
           onClose={handleDrawerToggle}
           ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
+            keepMounted: true,
           }}
           sx={{
             display: { xs: 'block', sm: 'none', backgroundImage: 'none', border: 'none' },
@@ -257,6 +228,7 @@ export default function ResponsiveDrawer(
           {drawer}
         </Drawer>
       </Box>
+  
       <Box
         component="main"
         sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
@@ -264,18 +236,7 @@ export default function ResponsiveDrawer(
         
         <Toolbar />
 
-        <Breadcrumbs aria-label="breadcrumb">
-          <Link color="inherit" href="/">
-            MUI
-          </Link>
-          <Link
-            color="inherit"
-            href="/material-ui/getting-started/installation/"
-          >
-            Core
-          </Link>
-          <Typography color="text.primary">Breadcrumbs</Typography>
-        </Breadcrumbs>
+        
         
         {children}
        

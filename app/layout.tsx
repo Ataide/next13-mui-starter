@@ -7,7 +7,7 @@ export const metadata = {
   description: 'Estudo de caso do NextJs 13',
 }
 
-const publicRoutes = ['/login', '/registro']
+// const publicRoutes = ['/login', '/registro']
 
 export default function RootLayout({
   children,
@@ -17,9 +17,7 @@ export default function RootLayout({
   return (
     <html lang="pt-br">      
         <body>  
-          <PrivateLayout>
-            {children}
-          </PrivateLayout>           
+            {children}         
         </body>
      
     </html>

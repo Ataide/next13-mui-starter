@@ -9,7 +9,7 @@ interface TableProps {
   options?: MUIDataTableOptions | undefined
 }
 
-export function Table({ title, data, columns, options }: TableProps) {
+export function ADATable({ title, data, columns, options }: TableProps) {
   
   return(
   <>
