@@ -1,5 +1,8 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  corePlugins: {
+    preflight: false,
+  },
   content: [
     "./node_modules/flowbite-react/**/*.js",
     "./app/**/*.{js,ts,jsx,tsx}",

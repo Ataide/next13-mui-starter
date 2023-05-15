@@ -13,9 +13,66 @@ datasource db {
 model User {
   id            String    @default(cuid()) @id
   name          String?
-  email         String   @unique
+  email         String    @unique
   password      String
   createdAt     DateTime  @default(now()) @map(name: "created_at")
   updatedAt     DateTime  @updatedAt @map(name: "updated_at") 
   @@map(name: "users")
 }
+model Office {
+  id            Int         @id @default(autoincrement())
+  name          String
+  active        Boolean     @default(true) 
+  created_at    DateTime    @default(now()) @map(name: "created_at")
+  updatedAt     DateTime    @updatedAt @map(name: "updated_at")
+  @@map(name: "offices")
+}
+
+model Department {
+  id            Int         @id @default(autoincrement())
+  name          String
+  active        Boolean     @default(true)
+  created_at    DateTime    @default(now()) @map(name: "created_at")
+  updatedAt     DateTime    @updatedAt @map(name: "updated_at")
+  @@map(name: "departments")
+}
+
+model Person {
+  id            Int         @id @default(autoincrement())
+  name          String
+  cpf           String      @unique
+  active        Boolean     @default(true)
+  contract      Contract?
+  position      Position[]  
+  created_at    DateTime    @default(now()) @map(name: "created_at")
+  updatedAt     DateTime    @updatedAt @map(name: "updated_at")
+  @@map("persons")
+}
+
+model Position {
+  id            Int         @id @default(autoincrement())
+  name          String
+  hourPrice     Decimal?    @db.Decimal(9,2) @map(name: "hour_price")
+  person        Person[]
+  active        Boolean     @default(true)
+  created_at    DateTime    @default(now()) @map(name: "created_at")
+  updatedAt     DateTime    @updatedAt @map(name: "updated_at")
+  @@map(name: "positions")
+}
+
+model Contract {
+  id            Int         @id @default(autoincrement())
+  name          String
+  personId      Int         @unique
+  person        Person      @relation(fields: [personId] , references: [id])
+  active        Boolean     @default(true)
+  created_at    DateTime    @default(now()) @map(name: "created_at")
+  updatedAt     DateTime    @updatedAt @map(name: "updated_at")
+  @@map("contracts")
+}
+
+
+
+
+
+

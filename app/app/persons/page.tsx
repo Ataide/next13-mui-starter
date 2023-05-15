@@ -1,7 +1,8 @@
 export default function Page() {
   return (
     <>
-      <h1>Pagina listagem e edição de usuarios</h1>
+      <h1> Página Principal de Pessoas</h1>
     </>
+
   )
 }

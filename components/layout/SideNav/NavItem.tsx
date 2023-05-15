@@ -35,7 +35,7 @@ export function NavItem( {target, text, icon, mobileOpen, handleDrawerToggle , i
               minHeight: 48,
               justifyContent: mobileOpen ? 'initial' : 'center',
               px: 2.5,
-              pl: isGroupedItem ? 4 : 2.5
+              pl: isGroupedItem ? 5 : 2.5
             }}
           >
             <ListItemIcon

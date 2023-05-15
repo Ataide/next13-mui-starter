@@ -1,13 +1,9 @@
-import "../styles/output.css";
-
-import { PrivateLayout } from '../components/layout/privateLayout';
+import "../styles/input.css";
 
 export const metadata = {
   title: 'iBase - Soluções',
   description: 'Estudo de caso do NextJs 13',
 }
-
-// const publicRoutes = ['/login', '/registro']
 
 export default function RootLayout({
   children,
@@ -19,7 +15,6 @@ export default function RootLayout({
         <body>  
             {children}         
         </body>
-     
     </html>
   )
 }

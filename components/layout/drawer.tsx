@@ -2,29 +2,31 @@
 
 import { useState } from 'react';
 
-import Home from '@mui/icons-material/Home'
+import Button from '@material-tailwind/react/components/Button';
+import Home from '@mui/icons-material/Home';
+import MenuIcon from '@mui/icons-material/Menu';
+import InboxIcon from '@mui/icons-material/MoveToInbox';
+import OfflineBolt from '@mui/icons-material/OfflineBolt';
+import PeopleIcon from '@mui/icons-material/People';
 import SettingsIcon from '@mui/icons-material/Settings';
+import WorkIcon from '@mui/icons-material/Work';
 import AppBar from '@mui/material/AppBar';
+import Avatar from "@mui/material/Avatar";
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import Drawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
 import List from '@mui/material/List';
-import MenuIcon from '@mui/icons-material/Menu';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import Avatar from "@mui/material/Avatar";
+import Toolbar from '@mui/material/Toolbar';
 import Tooltip from '@mui/material/Tooltip';
-import Button from '@material-tailwind/react/components/Button';
-import PeopleIcon from '@mui/icons-material/People';
+import Typography from '@mui/material/Typography';
 import ThemeSwitcherComponent from './themeSwitch';
 
-import { signIn, signOut, useSession } from 'next-auth/react';
-import { NavItem } from './SideNav/NavItem';
+import { signOut, useSession } from 'next-auth/react';
 import { GroupedNavItem } from './SideNav/GroupedNavItem';
+import { NavItem } from './SideNav/NavItem';
 
 const drawerWidth = 260;
 
@@ -77,27 +79,60 @@ export default function ResponsiveDrawer(
           mobileOpen={mobileOpen}   
         />
 
-         <NavItem 
-          text='Dashboard' 
-          target='/app/dashboard' 
-          icon={<InboxIcon />} 
-          handleDrawerToggle={handleDrawerToggle} 
-          mobileOpen={mobileOpen}   
+        <NavItem
+          text='Dashboard'
+          target='/app/dashboard'
+          icon={<InboxIcon />}
+          handleDrawerToggle={handleDrawerToggle}
+          mobileOpen={mobileOpen}
         />
+
+        <NavItem
+          text='Contratos'
+          target='/app/contracts'
+          icon={<WorkIcon />}
+          handleDrawerToggle={handleDrawerToggle}
+          mobileOpen={mobileOpen}
+        />
+
+        <GroupedNavItem
+          text='Cadastros'
+          icon={<SettingsIcon />}
+          mobileOpen={mobileOpen} 
+        >
+          <NavItem
+            isGroupedItem={ true }
+            text='Pessoas'
+            target='/app/persons'
+            icon={<PeopleIcon />}
+            handleDrawerToggle={handleDrawerToggle}
+            mobileOpen={mobileOpen} 
+          />
+
+          <NavItem
+            isGroupedItem={ true }
+            text='Departamentos'
+            target='/app/settings/offices'
+            icon={<OfflineBolt />}
+            handleDrawerToggle={handleDrawerToggle}
+            mobileOpen={mobileOpen} 
+          />
+        </GroupedNavItem>
         
         <GroupedNavItem
           text='Administração'
           icon={<SettingsIcon />}
           mobileOpen={mobileOpen} 
-        > 
+        >
           <NavItem
             isGroupedItem={ true }
             text='Usuarios'
-            target='/app/administracao/users'
+            target='/app/settings/users'
             icon={<PeopleIcon />}
             handleDrawerToggle={handleDrawerToggle}
             mobileOpen={mobileOpen} 
           />
+           
         </GroupedNavItem>
 
       </List>

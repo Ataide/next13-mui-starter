@@ -1,4 +1,4 @@
-import "../../styles/output.css";
+import "../../styles/input.css";
 
 import { PrivateLayout } from '../../components/layout/privateLayout';
 

@@ -41,10 +41,10 @@ export function GroupedNavItem( { children, mobileOpen, text, icon}: GroupedNavI
           px: 2.5,
         }}
       >
-        <ListItemIcon>
+        <ListItemIcon sx={{minWidth: 48}}>
           {icon}
         </ListItemIcon>
-        <ListItemText primary={text} />
+        <ListItemText primary={text} sx={{pl:0}} />
         {open ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
 
