@@ -23,6 +23,7 @@ import ThemeSwitcherComponent from "./themeSwitch";
 
 import Button from "@mui/material/Button";
 import { signOut, useSession } from "next-auth/react";
+import { useLayoutContext } from "../../contexts/layoutContext";
 import { GroupedNavItem } from "./SideNav/GroupedNavItem";
 import { NavItem } from "./SideNav/NavItem";
 
@@ -36,6 +37,7 @@ export default function ResponsiveDrawer({
   toggleDarkMode: (check: boolean) => void;
 }) {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const { value, myFunction } = useLayoutContext();
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -45,7 +47,7 @@ export default function ResponsiveDrawer({
     setAnchorEl(null);
   };
 
-  const appName = "Titulo Inicial";
+  const appName = value;
   const [mobileOpen, setMobileOpen] = useState(false);
   const { data: session } = useSession();
 
@@ -70,7 +72,7 @@ export default function ResponsiveDrawer({
           component="div"
           className="font-extrabold text-neutral-500"
         >
-          SYS
+          SYS {value}
         </Typography>
       </Toolbar>
 

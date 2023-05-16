@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 import { SessionProvider } from "next-auth/react";
 import { useMemo, useState } from "react";
+import { LayoutProvider } from "../../contexts/layoutContext";
 import { darkTheme, lightTheme } from "../../styles/theme/themes";
 import ResponsiveDrawer from "./drawer";
 ("./drawer");
@@ -30,12 +31,14 @@ export function PrivateLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <SessionProvider>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <ResponsiveDrawer toggleDarkMode={toggleDarkMode}>
-            {children}
-          </ResponsiveDrawer>
-        </ThemeProvider>
+        <LayoutProvider>
+          <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <ResponsiveDrawer toggleDarkMode={toggleDarkMode}>
+              {children}
+            </ResponsiveDrawer>
+          </ThemeProvider>
+        </LayoutProvider>
       </SessionProvider>
     </>
   );
