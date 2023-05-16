@@ -1,20 +1,16 @@
-import "../styles/input.css";
-
 export const metadata = {
-  title: 'iBase - Soluções',
-  description: 'Estudo de caso do NextJs 13',
-}
+  title: "iBase - Soluções",
+  description: "Estudo de caso do NextJs 13",
+};
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
-}) {  
+  children: React.ReactNode;
+}) {
   return (
-    <html lang="pt-br">      
-        <body>  
-            {children}         
-        </body>
+    <html lang="pt-br">
+      <body>{children}</body>
     </html>
-  )
+  );
 }

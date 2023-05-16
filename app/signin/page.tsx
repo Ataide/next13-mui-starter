@@ -1,46 +1,50 @@
-'use client'
+"use client";
 
-import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
-import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useRouter } from 'next/navigation';
-import { useForm } from 'react-hook-form';
-import { signIn } from 'next-auth/react';
+import { zodResolver } from "@hookform/resolvers/zod";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import Avatar from "@mui/material/Avatar";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import CssBaseline from "@mui/material/CssBaseline";
+import Link from "@mui/material/Link";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
+import { signIn } from "next-auth/react";
+import { Controller, useForm } from "react-hook-form";
+import { infer as Infer, object, string } from "zod";
 
-interface CredentialsType {
-  email: string,
-  password: string
-}
+const schema = object({
+  email: string().email("Digite um email válido."),
+  password: string().min(4, "Precisa ter ao menos 4 caracteres."),
+});
+
+type CredentialsType = Infer<typeof schema>;
 
 const theme = createTheme();
 
 export default function SignIn() {
-  const { register , handleSubmit, formState: { errors }} = useForm<CredentialsType>();
+  const {
+    control,
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<CredentialsType>({
+    mode: "onChange",
+    resolver: zodResolver(schema),
+  });
 
   const onSubmit = async (data: CredentialsType) => {
-    const isLoggged = await signIn('credentials', {
+    const isLoggged = await signIn("credentials", {
       email: data.email,
       password: data.password,
-      redirect: true,         
-      callbackUrl: '/app'
-    }) 
-    
+      redirect: true,
+      callbackUrl: "/app",
+    });
 
-    console.log(errors)
-    
-  }
-  
-
-
-
+    console.log(isLoggged);
+  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -49,43 +53,59 @@ export default function SignIn() {
         <Box
           sx={{
             marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
             Entrar
           </Typography>
-          <Box component="form" onSubmit={handleSubmit(onSubmit)} noValidate sx={{ mt: 1 }}>
-            <TextField
-              {...register('email', { required: true }) }
-              margin="normal"              
-              fullWidth
-              id="email"
-              label="Email"
+          <Box
+            component="form"
+            onSubmit={handleSubmit(onSubmit)}
+            noValidate
+            sx={{ mt: 1 }}
+          >
+            <Controller
               name="email"
-              autoComplete="email"
-              autoFocus
+              control={control}
+              defaultValue=""
+              render={({ field: { ref, ...field } }) => (
+                <TextField
+                  variant="outlined"
+                  label="Email"
+                  margin="normal"
+                  fullWidth
+                  error={Boolean(errors.email)}
+                  helperText={errors.email?.message}
+                  inputRef={ref}
+                  {...field}
+                />
+              )}
             />
-            <TextField
-              {...register('password', { required: true }) }
-              margin="normal"
-              required
-              fullWidth
+
+            <Controller
               name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
+              control={control}
+              defaultValue=""
+              render={({ field: { ref, ...field } }) => (
+                <TextField
+                  variant="outlined"
+                  label="Password"
+                  margin="normal"
+                  fullWidth
+                  type="password"
+                  error={Boolean(errors.password)}
+                  helperText={errors.password?.message}
+                  inputRef={ref}
+                  {...field}
+                />
+              )}
             />
-            {/* <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            /> */}
             <Button
               type="submit"
               fullWidth
@@ -107,13 +127,18 @@ export default function SignIn() {
 
 function Copyright(props: any) {
   return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
+    <Typography
+      variant="body2"
+      color="text.secondary"
+      align="center"
+      {...props}
+    >
+      {"Copyright © "}
       <Link color="inherit" href="https://mui.com/">
         IBase.com
-      </Link>{' '}
+      </Link>{" "}
       {new Date().getFullYear()}
-      {'.'}
+      {"."}
     </Typography>
   );
 }

@@ -1,23 +1,25 @@
-'use client'
+"use client";
 
-import { ThemeProvider, CssBaseline, createTheme, useMediaQuery } from "@mui/material";
-import { useMemo, useState } from "react";
-import ResponsiveDrawer from "./drawer"; "./drawer";
-import { darkTheme, lightTheme } from '../../styles/theme/themes';
+import {
+  CssBaseline,
+  ThemeProvider,
+  createTheme,
+  useMediaQuery,
+} from "@mui/material";
 import { SessionProvider } from "next-auth/react";
+import { useMemo, useState } from "react";
+import { darkTheme, lightTheme } from "../../styles/theme/themes";
+import ResponsiveDrawer from "./drawer";
+("./drawer");
 
-export function PrivateLayout({
-    children,
-  }: {
-    children: React.ReactNode
-  }) {
-
+export function PrivateLayout({ children }: { children: React.ReactNode }) {
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
+
   const [darkMode, setDarkMode] = useState(true);
 
-
   const theme = useMemo(
-    () => darkMode ? createTheme(darkTheme) : createTheme(lightTheme), [darkMode]
+    () => (darkMode ? createTheme(darkTheme) : createTheme(lightTheme)),
+    [darkMode]
   );
 
   const toggleDarkMode = (checked: boolean) => {
@@ -26,15 +28,15 @@ export function PrivateLayout({
   };
 
   return (
-  <>
-    <SessionProvider>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
+    <>
+      <SessionProvider>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
           <ResponsiveDrawer toggleDarkMode={toggleDarkMode}>
-              {children}
+            {children}
           </ResponsiveDrawer>
-      </ThemeProvider>
-    </SessionProvider>
-  </>
-  )
+        </ThemeProvider>
+      </SessionProvider>
+    </>
+  );
 }

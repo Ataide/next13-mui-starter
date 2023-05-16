@@ -1,5 +1,12 @@
-"use client"
-import { CardContent, Typography, Card, CardActions, Button, Grid } from "@mui/material";
+"use client";
+import {
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  Grid,
+  Typography,
+} from "@mui/material";
 import Link from "next/link";
 
 interface StatsProps {
@@ -12,21 +19,41 @@ interface StatsProps {
   showActions?: boolean;
 }
 
-export function Stats({size, linkButtonRef, statsContent, title, value, description, showActions=false} : StatsProps) {
+export function Stats({
+  size,
+  linkButtonRef,
+  statsContent,
+  title,
+  value,
+  description,
+  showActions = false,
+}: StatsProps) {
   return (
     <>
       <Grid container spacing={3}>
-        <Grid item xs={12}> <Typography> Dashboard </Typography> </Grid>
-        
+        <Grid item xs={12}>
+          {" "}
+          <Typography> Dashboard </Typography>{" "}
+        </Grid>
+
         <Grid item xs={2}>
-          <Card sx={{ minWidth: 275 }} className="text-center">
+          <Card sx={{ minWidth: 275, textAlign: "center" }}>
             <CardContent>
-              { statsContent ? statsContent : (
+              {statsContent ? (
+                statsContent
+              ) : (
                 <>
-                  <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                  <Typography
+                    sx={{ fontSize: 14 }}
+                    color="text.secondary"
+                    gutterBottom
+                  >
                     {title}
                   </Typography>
-                  <Typography variant="h3" component="div"> {value} </Typography>
+                  <Typography variant="h3" component="div">
+                    {" "}
+                    {value}{" "}
+                  </Typography>
                   <Typography sx={{ mb: 1.5 }} color="text.secondary">
                     {description}
                   </Typography>
@@ -34,8 +61,8 @@ export function Stats({size, linkButtonRef, statsContent, title, value, descript
               )}
             </CardContent>
             {showActions && (
-              <CardActions>
-                <Link href={'/app/administracao/users/create'} >
+              <CardActions sx={{ textAlign: "center" }}>
+                <Link href={"/app/administracao/users/create"}>
                   <Button size="small">Gerenciar</Button>
                 </Link>
               </CardActions>
@@ -44,5 +71,5 @@ export function Stats({size, linkButtonRef, statsContent, title, value, descript
         </Grid>
       </Grid>
     </>
-  )
+  );
 }
